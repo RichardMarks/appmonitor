@@ -226,6 +226,7 @@ function connectEvents() {
       console.log({ result });
       if (result) {
         btnStopServer.disabled = false;
+        txtServerPort.disabled = true;
       } else {
         alert(
           "Server could not be started. Port in use already? Try another port."
@@ -244,6 +245,7 @@ function connectEvents() {
       console.log({ result });
       if (result) {
         btnStartServer.disabled = false;
+        txtServerPort.disabled = false;
       } else {
         alert(
           "Could not stop server! Quit the application and the server should stop"
