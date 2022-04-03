@@ -74,7 +74,33 @@ function createEventListItem(recvEvent) {
   item.appendChild(messageDiv);
   item.appendChild(detailDiv);
 
+  item.dataset.name = name;
+
   return item;
+}
+
+function eventListItemMatchesFilter(item, { key = "name", value: text = "" }) {
+  return (
+    text === "" ||
+    (item && item.dataset[key] && item.dataset[key].includes(text))
+  );
+}
+
+function filterEvents(list, filter) {
+  const text = filter.value || "";
+  const key = filter.key || "name";
+
+  if (text.length) {
+    for (const item of list.children) {
+      item.style.display = eventListItemMatchesFilter(item, filter)
+        ? "initial"
+        : "none";
+    }
+  } else {
+    for (const item of list.children) {
+      item.style.display = "initial";
+    }
+  }
 }
 
 function connectEvents() {
@@ -89,6 +115,25 @@ function connectEvents() {
   const divEventsReceivedList = document.querySelector(
     ".events-received .event-list"
   );
+
+  function filterEventsReceivedList() {
+    filterEvents(divEventsReceivedList, {
+      value: txtFilterText.value,
+      key: "name",
+    });
+  }
+
+  function addEventsReceivedListItem(recvEvent) {
+    const item = createEventListItem(recvEvent);
+    const filter = { key: "name", value: txtFilterText.value };
+    item.style.display = eventListItemMatchesFilter(item, filter)
+      ? "initial"
+      : "none";
+    divEventsReceivedList.appendChild(item);
+  }
+
+  btnFilterEvents.disabled = true;
+  btnClearEvents.disabled = true;
 
   // initially the filter text and clear filter buttons are not displayed
   txtFilterText.style.display = "none";
@@ -128,6 +173,7 @@ function connectEvents() {
         txtFilterText.value = "";
         // TODO - update displayed received events list to show all events (unfiltered)
       }
+      filterEventsReceivedList();
     },
     false
   );
@@ -140,6 +186,7 @@ function connectEvents() {
       const text = e.target.value;
       // TODO - update displayed received events list to show events matching the filter
       console.log("TODO - filter events matching", text);
+      filterEventsReceivedList();
     },
     false
   );
@@ -151,6 +198,10 @@ function connectEvents() {
       while (divEventsReceivedList.firstChild) {
         divEventsReceivedList.removeChild(divEventsReceivedList.firstChild);
       }
+      // cannot filter an empty list
+      btnFilterEvents.disabled = true;
+      // cannot clear an empty list
+      btnClearEvents.disabled = true;
       // tell the backend to clear the events
       bridge.clearEvents();
     },
@@ -160,8 +211,9 @@ function connectEvents() {
   bridge.onEventReceived((_, recvEvent) => {
     console.log("* RECEIVED EVENT");
     console.log({ recvEvent });
-    const item = createEventListItem(recvEvent);
-    divEventsReceivedList.appendChild(item);
+    addEventsReceivedListItem(recvEvent);
+    btnFilterEvents.disabled = false;
+    btnClearEvents.disabled = false;
   });
 
   btnStopServer.disabled = true;
