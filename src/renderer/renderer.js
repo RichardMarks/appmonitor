@@ -82,9 +82,66 @@ function connectEvents() {
   const btnStopServer = document.querySelector(".btn-stop-server");
   const btnClearEvents = document.querySelector(".btn-clear-events");
   const txtServerPort = document.querySelector(".input-server-port");
+  const btnFilterEvents = document.querySelector(".btn-filter-events");
+  const txtFilterText = document.querySelector(".input-filter-text");
+  const btnClearFilter = document.querySelector(".btn-clear-filter");
 
   const divEventsReceivedList = document.querySelector(
     ".events-received .event-list"
+  );
+
+  // initially the filter text and clear filter buttons are not displayed
+  txtFilterText.style.display = "none";
+  btnClearFilter.style.display = "none";
+
+  // clicking the filter events button
+  // - will show the filter text input
+  // - will show the clear filter button
+  // - will hide the filter events button
+  btnFilterEvents.addEventListener(
+    "click",
+    () => {
+      txtFilterText.style.display = "initial";
+      btnClearFilter.style.display = "initial";
+      btnFilterEvents.style.display = "none";
+    },
+    false
+  );
+
+  // clicking the clear filter button
+  // - if the filter text input is empty
+  //     - will hide the filter text input
+  //     - will hide the clear filter button
+  //     - will show the filter events button
+  // - if the filter text input is not empty
+  //     - will clear the filter text input
+  //     - will update displayed received events list to show all events
+  btnClearFilter.addEventListener(
+    "click",
+    () => {
+      if (!txtFilterText.value.length) {
+        txtFilterText.style.display = "none";
+        btnClearFilter.style.display = "none";
+        btnFilterEvents.style.display = "initial";
+        // TODO - update displayed received events list to show all events (unfiltered)
+      } else {
+        txtFilterText.value = "";
+        // TODO - update displayed received events list to show all events (unfiltered)
+      }
+    },
+    false
+  );
+
+  // changing the filter text input value
+  // - will update displayed received events list to show events matching the filter
+  txtFilterText.addEventListener(
+    "input",
+    (e) => {
+      const text = e.target.value;
+      // TODO - update displayed received events list to show events matching the filter
+      console.log("TODO - filter events matching", text);
+    },
+    false
   );
 
   btnClearEvents.addEventListener(
