@@ -1,0 +1,18 @@
+{
+  "name": "appmonitor",
+  "version": "1.0.0",
+  "description": "A development tool for recording logs from React Native apps without all the noise.",
+  "main": "src/index.js",
+  "author": "Richard Marks <ccpsceo@gmail.com>",
+  "private": true,
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "18.0.0"
+  },
+  "dependencies": {
+    "express": "4.17.3"
+  },
+  "scripts": {
+    "start": "electron ."
+  }
+}

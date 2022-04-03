@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'"
+    />
+    <link href="./styles.css" rel="stylesheet" />
+    <title>App Monitor</title>
+  </head>
+  <body>
+    <div class="toolbar">
+      <h1>App Monitor</h1>
+      <div>
+        <label>Server PORT</label>
+        <input
+          class="input input-server-port"
+          type="number"
+          placeholder="PORT"
+          value="7000"
+        />
+      </div>
+      <div class="buttons-row">
+        <button class="btn btn-primary btn-start-server">Start Server</button>
+        <button class="btn btn-secondary btn-stop-server">Stop Server</button>
+        <button class="btn btn-clear-events">Clear Events</button>
+      </div>
+    </div>
+
+    <section class="events-received">
+      <div class="event-list"></div>
+    </section>
+
+    <footer>
+      <div>Designed and Built with 🤍 by Richard Marks</div>
+      <small>
+        Node.js <span id="node-version"></span>, Chromium
+        <span id="chrome-version"></span>, and Electron
+        <span id="electron-version"></span>
+      </small>
+    </footer>
+
+    <!-- You can also require other files to run in this process -->
+    <script src="./renderer.js"></script>
+  </body>
+</html>

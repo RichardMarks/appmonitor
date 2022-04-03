@@ -1,0 +1,56 @@
+/* styles.css */
+
+/* Add styles here to customize the appearance of your app */
+
+body {
+  margin: 0;
+  background-color: #369;
+  color: #ddf;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #123;
+  min-height: 48px;
+  font-size: 12px;
+  text-align: center;
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+  margin-left: 16px;
+  font-size: 20px;
+}
+
+.toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #123;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 48px;
+}
+
+.buttons-row {
+  display: flex;
+  align-items: center;
+}
+
+.input-server-port {
+  width: 46px;
+}
+
+.events-received {
+  margin-top: 48px;
+  margin-bottom: 48px;
+  max-height: calc(100vh - (48px + 48px));
+  overflow-y: scroll;
+}
