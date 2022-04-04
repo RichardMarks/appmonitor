@@ -134,6 +134,7 @@ function connectEvents() {
   const btnFilterEvents = document.querySelector(".btn-filter-events");
   const txtFilterText = document.querySelector(".input-filter-text");
   const btnClearFilter = document.querySelector(".btn-clear-filter");
+  const selectFilterKey = document.querySelector(".select-filter-key");
 
   const divEventsReceivedList = document.querySelector(
     ".events-received .event-list"
@@ -142,13 +143,13 @@ function connectEvents() {
   function filterEventsReceivedList() {
     filterEvents(divEventsReceivedList, {
       value: txtFilterText.value,
-      key: "name",
+      key: selectFilterKey.value,
     });
   }
 
   function addEventsReceivedListItem(recvEvent) {
     const item = createEventListItem(recvEvent);
-    const filter = { key: "name", value: txtFilterText.value };
+    const filter = { key: selectFilterKey.value, value: txtFilterText.value };
     item.style.display = eventListItemMatchesFilter(item, filter)
       ? "initial"
       : "none";
@@ -161,6 +162,7 @@ function connectEvents() {
   // initially the filter text and clear filter buttons are not displayed
   txtFilterText.style.display = "none";
   btnClearFilter.style.display = "none";
+  selectFilterKey.style.display = "none";
 
   // clicking the filter events button
   // - will show the filter text input
@@ -171,6 +173,7 @@ function connectEvents() {
     () => {
       txtFilterText.style.display = "initial";
       btnClearFilter.style.display = "initial";
+      selectFilterKey.style.display = "initial";
       btnFilterEvents.style.display = "none";
     },
     false
@@ -190,6 +193,7 @@ function connectEvents() {
       if (!txtFilterText.value.length) {
         txtFilterText.style.display = "none";
         btnClearFilter.style.display = "none";
+        selectFilterKey.style.display = "none";
         btnFilterEvents.style.display = "initial";
         // TODO - update displayed received events list to show all events (unfiltered)
       } else {
@@ -209,6 +213,15 @@ function connectEvents() {
       const text = e.target.value;
       // TODO - update displayed received events list to show events matching the filter
       console.log("TODO - filter events matching", text);
+      filterEventsReceivedList();
+    },
+    false
+  );
+
+  selectFilterKey.addEventListener(
+    "input",
+    () => {
+      console.log("select", selectFilterKey.value);
       filterEventsReceivedList();
     },
     false
