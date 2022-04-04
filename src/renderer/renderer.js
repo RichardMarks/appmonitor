@@ -96,6 +96,8 @@ function createEventListItem(recvEvent) {
   item.appendChild(detailDiv);
 
   item.dataset.name = name;
+  item.dataset.message = message;
+  item.dataset.details = serializeObjToDataString(detail);
 
   return item;
 }
