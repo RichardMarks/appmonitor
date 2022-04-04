@@ -11,6 +11,27 @@ if (!bridge) {
   throw new Error("Unable to locate the AppMonitorBridge");
 }
 
+function serializeObjToDataString(obj) {
+  if (
+    typeof obj === "number" ||
+    typeof obj === "boolean" ||
+    typeof obj === "string"
+  ) {
+    return obj.toString();
+  } else if (Array.isArray(obj)) {
+    return obj.map(serializeObjToDataString).join("");
+  } else if (typeof obj == "object") {
+    return Object.keys(obj)
+      .map((key) => `${key}${serializeObjToDataString(obj[key])}`)
+      .join("");
+  } else if (obj === null) {
+    return "null";
+  } else if (obj === undefined) {
+    return "undefined";
+  }
+  return "";
+}
+
 function createEventListItem(recvEvent) {
   /*
   
